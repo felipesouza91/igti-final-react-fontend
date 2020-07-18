@@ -1,3 +1,8 @@
 .main-title {
   margin-top: 50px;
+  flex-grow: 0 !important;
+}
+
+.hero-body-start-flex {
+  align-items: start !important;
 }

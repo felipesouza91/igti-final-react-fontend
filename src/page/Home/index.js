@@ -1,4 +1,6 @@
 import React from 'react';
+import DateSelect from '../../components/DateSelect';
+import TransactionInfo from '../../components/TransactionInfo';
 import './styles.css';
 
 function Home() {
@@ -14,8 +16,13 @@ function Home() {
       <div className="container main-title">
         <h1 className="title">Sistema de Gerenciamento de financas</h1>
       </div>
-      <div className="hero-body">
-        <div className="container"></div>
+      <div className="hero-body hero-body-start-flex">
+        <div className="container">
+          <div className="row">
+            <DateSelect />
+            <TransactionInfo />
+          </div>
+        </div>
       </div>
     </section>
   );
