@@ -7,24 +7,24 @@ function DateSelect() {
     <div className="column is-full">
       <div className="is-center">
         <div className="field is-grouped">
-          <p className="control">
+          <div className="control">
             <button className="button is-link">
               <FaArrowLeft size={20} color="#fff" />
             </button>
-          </p>
-          <p className="control">
+          </div>
+          <div className="control">
             <div className="select">
               <select>
                 <option>nov/2021</option>
                 <option>dez/2021</option>
               </select>
             </div>
-          </p>
-          <p className="control">
+          </div>
+          <div className="control">
             <button className="button is-link">
               <FaArrowRight size={20} color="#fff" />
             </button>
-          </p>
+          </div>
         </div>
       </div>
     </div>
