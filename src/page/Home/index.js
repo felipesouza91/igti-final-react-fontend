@@ -3,11 +3,12 @@ import DateSelect from '../../components/DateSelect';
 import TransactionInfo from '../../components/TransactionInfo';
 import Transaction from '../../components/Transaction';
 import NewTransaction from '../../components/NewTransaction';
-
+import Filter from '../../components/Filter';
 import './styles.css';
 
 function Home() {
   const [modalShow, setModalShow] = useState(false);
+  const [filter, setFilter] = useState('');
   return (
     <section className="hero is-info  is-fullheight">
       <div className="hero-head">
@@ -25,39 +26,7 @@ function Home() {
           <div className="row">
             <DateSelect />
             <TransactionInfo />
-            <div className="column">
-              <div className="field is-grouped">
-                <div className="control">
-                  <button
-                    onClick={() => setModalShow(!modalShow)}
-                    className="button is-success"
-                  >
-                    Novo Lançamento
-                  </button>
-                </div>
-                <div className="control is-expanded">
-                  <div className="field is-horizontal">
-                    <div className="field-label is-normal">
-                      <label className="label">Filtro</label>
-                    </div>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control is-expanded has-icons-left">
-                          <input
-                            className="input"
-                            type="text"
-                            placeholder="Filtro"
-                          />
-                          <span className="icon is-small is-left">
-                            <i className="fas fa-user"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Filter showModal={setModalShow} filter={setFilter} />
           </div>
           <div className="column">
             <Transaction isDebid={false} />

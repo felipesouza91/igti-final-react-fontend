@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../node_modules/bulma-checkradio/dist/css/bulma-checkradio.min.css';
-// import { Container } from './styles';
+import { getMonth, getDate, getYear, parseISO } from 'date-fns';
 
 function NewTransaction({ show }) {
+  const [type, setType] = useState('');
+  const [description, setDescription] = useState('');
+  const [value, setValue] = useState('');
+  const [category, setCategory] = useState('');
+  const [date, setDate] = useState(new Date());
+
+  function handleSubmit() {
+    const object = {
+      type,
+      description,
+      value,
+      category,
+      day: getDate(parseISO(date)),
+      mounth: getMonth(parseISO(date)) + 1,
+      year: getYear(parseISO(date)),
+    };
+
+    console.log(object);
+  }
+
   function handleDisable() {
     show(false);
   }
@@ -28,6 +48,8 @@ function NewTransaction({ show }) {
                 id="despesa"
                 type="radio"
                 name="tipo"
+                value="-"
+                onClick={(event) => setType(event.target.value)}
               />
               <label className="label" htmlFor="despesa">
                 Despesa
@@ -37,6 +59,7 @@ function NewTransaction({ show }) {
                 id="receita"
                 type="radio"
                 name="tipo"
+                onClick={(event) => setType(event.target.value)}
               />
               <label className="label" htmlFor="receita">
                 Receita
@@ -46,13 +69,23 @@ function NewTransaction({ show }) {
           <div className="field">
             <label className="label">Descrição</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Text input" />
+              <input
+                className="input"
+                type="text"
+                placeholder="Text input"
+                onChange={(event) => setDescription(event.target.value)}
+              />
             </div>
           </div>
           <div className="field">
             <label className="label">Categoria</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Text input" />
+              <input
+                className="input"
+                type="text"
+                placeholder="Text input"
+                onChange={(event) => setCategory(event.target.value)}
+              />
             </div>
           </div>
           <div className="field">
@@ -64,6 +97,7 @@ function NewTransaction({ show }) {
                     className="input"
                     type="number"
                     placeholder="Text input"
+                    onChange={(event) => setValue(event.target.value)}
                   />
                 </div>
               </div>
@@ -74,6 +108,7 @@ function NewTransaction({ show }) {
                     className="input"
                     type="date"
                     placeholder="Text input"
+                    onChange={(event) => setDate(event.target.value)}
                   />
                 </div>
               </div>
@@ -81,7 +116,9 @@ function NewTransaction({ show }) {
           </div>
         </section>
         <footer className="modal-card-foot">
-          <button className="button is-success">Salvar</button>
+          <button className="button is-success" onClick={handleSubmit}>
+            Salvar
+          </button>
           <button onClick={handleDisable} className="button is-danger">
             Fechar
           </button>
