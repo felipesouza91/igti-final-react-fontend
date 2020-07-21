@@ -1,37 +1,49 @@
 import React from 'react';
+import { formatNumber } from '../../helper/formater';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
+import api from '../../services/api';
 import './styles.css';
 
-function Transaction({ isDebid }) {
+function Transaction({ value, edit, show, deleteItem }) {
+  async function handleEdit() {
+    edit(value);
+    show(true);
+  }
+  function handleDelete() {
+    deleteItem(value._id);
+  }
+
   return (
     <div
       className={`box box-overrid ${
-        isDebid ? `has-background-danger	` : `has-background-success	`
+        value.type === '-' ? `has-background-danger	` : `has-background-success	`
       }`}
     >
       <article className="media center">
         <figure className="media-left">
-          <label className="label">1</label>
+          <label className="label">{value.day}</label>
         </figure>
         <div className="media-content ">
           <div className="content justify-content">
             <div className="info-transaction">
               <div>
-                <strong>Lazer</strong>
+                <strong>{value.category}</strong>
                 <br />
-                Almoço em restaurante
+                {value.description}
               </div>
               <div>
-                <strong className="title is-3 is-bold">R$ 35,00</strong>
+                <strong className="title is-3 is-bold">
+                  {formatNumber(value.value)}
+                </strong>
               </div>
             </div>
-            <div className="icon-container ">
-              <div className="icon">
-                <FaPencilAlt size={20} color="#FFF" />
-              </div>
-              <div className="icon">
-                <FaTrash size={20} color="#FFF" />
-              </div>
+            <div className="icon-container">
+              <button className="button is-white" onClick={handleEdit}>
+                <FaPencilAlt size={17} color="#FFF" />
+              </button>
+              <button className="button is-white" onClick={handleDelete}>
+                <FaTrash size={17} color="#FFF" />
+              </button>
             </div>
           </div>
         </div>

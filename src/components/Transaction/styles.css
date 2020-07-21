@@ -25,6 +25,10 @@
   margin: 5px;
 }
 
+.icon-container button {
+  background: transparent !important;
+}
+
 .is-bold {
   font-weight: bold !important;
 }

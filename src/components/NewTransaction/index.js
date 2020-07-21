@@ -1,29 +1,40 @@
 import React, { useState } from 'react';
 import '../../../node_modules/bulma-checkradio/dist/css/bulma-checkradio.min.css';
-import { getMonth, getDate, getYear, parseISO } from 'date-fns';
+import { format, parse } from 'date-fns';
+import api from '../../services/api';
 
-function NewTransaction({ show }) {
-  const [type, setType] = useState('');
-  const [description, setDescription] = useState('');
-  const [value, setValue] = useState('');
-  const [category, setCategory] = useState('');
-  const [date, setDate] = useState(new Date());
+function NewTransaction({ show, transaction }) {
+  const [type, setType] = useState(transaction.type);
+  const [description, setDescription] = useState(transaction.description);
+  const [value, setValue] = useState(transaction.value);
+  const [category, setCategory] = useState(transaction.category);
+  const [date, setDate] = useState(transaction.yearMonthDay);
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    const formatedDate = parse(date, 'yyyy-MM-dd', new Date());
     const object = {
       type,
       description,
       value,
       category,
-      day: getDate(parseISO(date)),
-      mounth: getMonth(parseISO(date)) + 1,
-      year: getYear(parseISO(date)),
+      day: format(formatedDate, 'dd'),
+      month: format(formatedDate, 'MM'),
+      year: format(formatedDate, 'yyyy'),
     };
-
-    console.log(object);
+    try {
+      if (!transaction._id) {
+        await api.post(`/transactions`, object);
+      } else {
+        await api.put(`/transactions/${transaction._id}`, object);
+      }
+      show(false);
+    } catch (error) {
+      console.log('Error');
+    }
   }
 
   function handleDisable() {
+    transaction = {};
     show(false);
   }
 
@@ -49,6 +60,7 @@ function NewTransaction({ show }) {
                 type="radio"
                 name="tipo"
                 value="-"
+                defaultChecked={transaction.type === '-'}
                 onClick={(event) => setType(event.target.value)}
               />
               <label className="label" htmlFor="despesa">
@@ -59,6 +71,8 @@ function NewTransaction({ show }) {
                 id="receita"
                 type="radio"
                 name="tipo"
+                value="+"
+                defaultChecked={transaction.type === '+'}
                 onClick={(event) => setType(event.target.value)}
               />
               <label className="label" htmlFor="receita">
@@ -72,7 +86,8 @@ function NewTransaction({ show }) {
               <input
                 className="input"
                 type="text"
-                placeholder="Text input"
+                placeholder="Descrição"
+                defaultValue={transaction.description}
                 onChange={(event) => setDescription(event.target.value)}
               />
             </div>
@@ -83,8 +98,9 @@ function NewTransaction({ show }) {
               <input
                 className="input"
                 type="text"
-                placeholder="Text input"
+                placeholder="Categoria"
                 onChange={(event) => setCategory(event.target.value)}
+                defaultValue={transaction.category}
               />
             </div>
           </div>
@@ -96,8 +112,9 @@ function NewTransaction({ show }) {
                   <input
                     className="input"
                     type="number"
-                    placeholder="Text input"
+                    placeholder="Valor"
                     onChange={(event) => setValue(event.target.value)}
+                    defaultValue={transaction.value}
                   />
                 </div>
               </div>
@@ -107,8 +124,8 @@ function NewTransaction({ show }) {
                   <input
                     className="input"
                     type="date"
-                    placeholder="Text input"
                     onChange={(event) => setDate(event.target.value)}
+                    value={transaction.yearMonthDay}
                   />
                 </div>
               </div>
