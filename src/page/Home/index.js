@@ -25,18 +25,18 @@ function Home() {
 
   useEffect(() => {
     if (!modalShow) {
-      load(dateFilter);
+      load(dateFilter, filter);
     }
-  }, [dateFilter, modalShow]);
+  }, [dateFilter, filter, modalShow]);
 
-  async function load(filter) {
-    if (!filter) {
+  async function load(dateFilter, filter) {
+    if (!dateFilter) {
       const year = getYear(new Date());
       const month = getMonth(new Date()) + 1;
-      filter = `${year}-0${month}`;
+      dateFilter = `${year}-0${month}`;
     }
     const response = await api.get('/transactions', {
-      params: { period: filter },
+      params: { period: dateFilter, description: filter },
     });
     let totalReceita = 0;
     let totalDespesa = 0;
@@ -56,9 +56,7 @@ function Home() {
     <section className="hero is-info  is-fullheight">
       <div className="hero-head">
         <nav className="navbar">
-          <div className="container">
-            <a className="navbar-item">Home</a>
-          </div>
+          <div className="container"></div>
         </nav>
       </div>
       <div className="container main-title">
