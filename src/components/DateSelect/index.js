@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { eachMonthOfInterval, format } from 'date-fns';
+import { eachMonthOfInterval, format, getYear } from 'date-fns';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import './styles.css';
 
@@ -14,8 +14,8 @@ function DateSelect({ filter, value }) {
   useEffect(() => {
     setSelected(value);
     const dates = eachMonthOfInterval({
-      start: new Date(2018, 12, 1),
-      end: new Date(2021, 11, 12),
+      start: new Date(getYear(new Date()) - 2, 12, 1),
+      end: new Date(getYear(new Date()) + 1, 11, 12),
     });
     const months = dates.map((date) => {
       return {
