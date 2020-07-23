@@ -56,7 +56,18 @@ function Home() {
     <section className="hero is-info  is-fullheight">
       <div className="hero-head">
         <nav className="navbar">
-          <div className="container"></div>
+          <div className="container">
+            <div id="navbarMenuHeroA" className="navbar-menu">
+              <div className="navbar-end">
+                <a
+                  href="https://github.com/felipesouza91/igti-final-react-fontend"
+                  className="navbar-item"
+                >
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
         </nav>
       </div>
       <div className="container main-title">
